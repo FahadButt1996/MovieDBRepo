@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">StarzPlayAssignment</string>
+    <string name="plase_wait">ارجوك انتظر</string>
+    <string name="title">عنوان :</string>
+    <string name="overview">ملخص :</string>
+    <string name="no_title_available">لا يوجد عنوان متاح</string>
+    <string name="no_overview_available">لا توجد نظرة عامة متاحة</string>
+    <string name="no_data_found">لاتوجد بيانات</string>
+    <string name="write_something_for_search">اكتب شيئا للبحث</string>
+    <string name="something_went_wrong">هناك خطأ ما</string>
+    <string name="no_connection">لا يوجد اتصال بالإنترنت</string>
+    <string name="load_more">تحميل المزيد</string>
+    <string name="multi_search_movie">أفلام متعددة البحث</string>
+    <string name="movie_detail">تفاصيل الفيلم</string>
+</resources>

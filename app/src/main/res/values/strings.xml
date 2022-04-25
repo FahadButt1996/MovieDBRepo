@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">StarzPlayAssignment</string>
+    <string name="plase_wait">Please Wait</string>
+    <string name="title">Title :</string>
+    <string name="overview">Overview :</string>
+    <string name="no_title_available">No title available</string>
+    <string name="no_overview_available">No overview available</string>
+    <string name="no_data_found">No Data Found</string>
+    <string name="write_something_for_search">Write Something for Search</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="no_connection">No Internet Connection</string>
+    <string name="load_more">Load More</string>
+    <string name="multi_search_movie">Multi Search Movies</string>
+    <string name="movie_detail">Movie Details</string>
+</resources>
