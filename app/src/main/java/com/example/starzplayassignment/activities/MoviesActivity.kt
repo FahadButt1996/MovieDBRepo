@@ -1,5 +1,6 @@
 package com.example.starzplayassignment.activities
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -20,7 +21,7 @@ import kotlin.collections.HashMap
 import kotlin.coroutines.CoroutineContext
 
 
-class MoviesActivity : AppCompatActivity(), CoroutineScope, GenericAdapterCallback,
+class MoviesActivity : BaseActivity(), CoroutineScope, GenericAdapterCallback,
     View.OnClickListener {
 
     private val compositeJob = Job()
@@ -44,6 +45,11 @@ class MoviesActivity : AppCompatActivity(), CoroutineScope, GenericAdapterCallba
         initView()
     }
 
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        LanguageConfigs.initializeLocale(this)
+    }
+
     private fun initView() {
         showNoDataView(R.drawable.searching, getString(R.string.write_something_for_search))
         binding.customToolbar.imageViewBack?.visibility = View.INVISIBLE
@@ -58,7 +64,6 @@ class MoviesActivity : AppCompatActivity(), CoroutineScope, GenericAdapterCallba
             this,
             MovieDBViewModel.UserViewModelFactory(MovieDBRepository())
         ).get(MovieDBViewModel::class.java)
-        languageConfigs = LanguageConfigs(this)
     }
 
     private fun setListeners() {
@@ -227,15 +232,15 @@ class MoviesActivity : AppCompatActivity(), CoroutineScope, GenericAdapterCallba
                 }
             }
             binding.customToolbar.language?.id -> {
+                languageConfigs = LanguageConfigs(this)
                 if (languageConfigs.language == LanguageEnum.ARABIC) {
                     languageConfigs.language = LanguageEnum.ENGLISH
-                    LanguageConfigs.initializeLocale(this, LanguageEnum.ENGLISH.languageCode)
 
                 } else {
                     languageConfigs.language = LanguageEnum.ARABIC
-                    LanguageConfigs.initializeLocale(this, LanguageEnum.ARABIC.languageCode)
 
                 }
+                LanguageConfigs.initializeLocale(this)
                 restartActivity()
             }
         }

@@ -1,5 +1,6 @@
 package com.example.starzplayassignment.activities
 
+import android.content.res.Configuration
 import android.content.res.Resources
 import android.media.MediaPlayer
 import android.net.Uri
@@ -8,12 +9,9 @@ import android.view.View
 import android.widget.MediaController
 import androidx.appcompat.app.AppCompatActivity
 import com.example.starzplayassignment.databinding.ActivityVideoViewBinding
-import com.example.starzplayassignment.utilities.VIDEO_URL
-import com.example.starzplayassignment.utilities.hideProgressDialog
-import com.example.starzplayassignment.utilities.hideStatusBar
-import com.example.starzplayassignment.utilities.showProgressDialog
+import com.example.starzplayassignment.utilities.*
 
-class VideoViewActivity : AppCompatActivity(), View.OnClickListener {
+class VideoViewActivity : BaseActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityVideoViewBinding
 
@@ -68,6 +66,7 @@ class VideoViewActivity : AppCompatActivity(), View.OnClickListener {
         binding.videoView.setOnInfoListener(info)
     }
 
+
     override fun onClick(view: View?) {
         when (view?.id) {
             binding.videoBackBtn.id -> {
@@ -79,6 +78,7 @@ class VideoViewActivity : AppCompatActivity(), View.OnClickListener {
     override fun onDestroy() {
         super.onDestroy()
         stopVideo()
+        LanguageConfigs.initializeLocale(this)
     }
 
     private fun stopVideo() {

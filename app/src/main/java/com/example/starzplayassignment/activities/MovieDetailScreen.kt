@@ -8,7 +8,7 @@ import com.example.starzplayassignment.databinding.ActivityMovieDetailScreenBind
 import com.example.starzplayassignment.utilities.*
 import java.util.*
 
-class MovieDetailScreen : AppCompatActivity(), View.OnClickListener {
+class MovieDetailScreen : BaseActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityMovieDetailScreenBinding
 
