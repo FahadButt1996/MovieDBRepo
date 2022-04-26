@@ -5,7 +5,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProviders
-import com.example.restapi.models.MultiSearchMovieDataResponse
+import com.example.restapi.models.ResultResponse
 import com.example.starzplayassignment.R
 import com.example.starzplayassignment.adapters.MultiSearchMovieAdapter
 import com.example.starzplayassignment.databinding.ActivityMoviesBinding
@@ -30,7 +30,7 @@ class MoviesActivity : AppCompatActivity(), CoroutineScope, GenericAdapterCallba
     lateinit var viewModel: MovieDBViewModel
     private lateinit var binding: ActivityMoviesBinding
     var queryTextChangedJob: Job? = null
-    lateinit var hashMap: HashMap<String, ArrayList<MultiSearchMovieDataResponse.Result>>
+    lateinit var hashMap: HashMap<String, ArrayList<ResultResponse>>
     var pageNo: Int = 1
     var totalPages: Int? = null
 
@@ -47,7 +47,7 @@ class MoviesActivity : AppCompatActivity(), CoroutineScope, GenericAdapterCallba
         showNoDataView(R.drawable.searching, getString(R.string.write_something_for_search))
         binding.customToolbar.imageViewBack?.visibility = View.INVISIBLE
 
-        if (!intent.getStringExtra("query").isNullOrEmpty()) {
+        if (!intent.getStringExtra(QUERY).isNullOrEmpty()) {
             binding.movieSearch.setQuery(intent.getStringExtra("query"), true)
         }
     }
@@ -97,7 +97,7 @@ class MoviesActivity : AppCompatActivity(), CoroutineScope, GenericAdapterCallba
         })
     }
 
-    fun getMovieDataHashMap(): HashMap<String, ArrayList<MultiSearchMovieDataResponse.Result>> {
+    fun getMovieDataHashMap(): HashMap<String, ArrayList<ResultResponse>> {
         if (!::hashMap.isInitialized) {
             hashMap = HashMap()
         }
@@ -105,7 +105,7 @@ class MoviesActivity : AppCompatActivity(), CoroutineScope, GenericAdapterCallba
     }
 
     private fun getMultiSearchData(query: String, page: Int) {
-        if (checkNetworkConnectivity(this) || true) {
+        if (checkNetworkConnectivity(this)) {
             launch {
                 showProgressDialog(this@MoviesActivity)
                 val multiSearchData = viewModel.getMultiSearchData(query, page)
@@ -133,6 +133,7 @@ class MoviesActivity : AppCompatActivity(), CoroutineScope, GenericAdapterCallba
         }
     }
 
+    // this is for pagination
     private fun handleLoadMoreBtnVisibility() {
         if (totalPages.nonNullValue() > pageNo) {
             binding.loadMore.visibility = View.VISIBLE
@@ -160,7 +161,7 @@ class MoviesActivity : AppCompatActivity(), CoroutineScope, GenericAdapterCallba
             val adapter =
                 MultiSearchMovieAdapter(
                     this@MoviesActivity,
-                    getMovieDataHashMap().keys.toList(),
+                    getMovieDataHashMap().keys.toList().sorted(),
                     getMovieDataHashMap(),
                     this@MoviesActivity
                 )
@@ -171,13 +172,41 @@ class MoviesActivity : AppCompatActivity(), CoroutineScope, GenericAdapterCallba
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        binding.movieSearch.clearFocus()
+    }
+
     override fun <T> getClickedObject(clickedObj: T, position: T, callingID: String) {
-        clickedObj as MultiSearchMovieDataResponse.Result
+        clickedObj as ResultResponse
         navigate<MovieDetailScreen>(ArrayList<IntentParams>().apply {
-            add(IntentParams(IMAGE_URL, clickedObj.posterPath.nonNullValue()))
-            add(IntentParams(TITLE, clickedObj.title.nonNullValue()))
-            add(IntentParams(OVERVIEW, clickedObj.overview.nonNullValue()))
-            add(IntentParams(MEDIA_TYPE, clickedObj.mediaType.nonNullValue()))
+            if (clickedObj.mediaType == MediaTypeEnum.PERSON.type) {
+                add(
+                    IntentParams(
+                        IMAGE_URL,
+                        clickedObj.profilePath.nonNullValue()
+                    )
+                )
+                add(IntentParams(TITLE, clickedObj.name.nonNullValue()))
+                add(
+                    IntentParams(
+                        OVERVIEW,
+                        clickedObj.overview.nonNullValue()
+                    )
+                )
+                add(
+                    IntentParams(
+                        MEDIA_TYPE,
+                        clickedObj.mediaType.nonNullValue()
+                    )
+                )
+
+            } else {
+                add(IntentParams(IMAGE_URL, clickedObj.posterPath.nonNullValue()))
+                add(IntentParams(TITLE, clickedObj.title.nonNullValue()))
+                add(IntentParams(OVERVIEW, clickedObj.overview.nonNullValue()))
+                add(IntentParams(MEDIA_TYPE, clickedObj.mediaType.nonNullValue()))
+            }
         })
     }
 
@@ -205,7 +234,7 @@ class MoviesActivity : AppCompatActivity(), CoroutineScope, GenericAdapterCallba
 
     private fun restartActivity() {
         val intent = intent
-        intent.putExtra("query", binding.movieSearch.query.toString())
+        intent.putExtra(QUERY, binding.movieSearch.query.toString())
         finish()
         startActivity(intent)
     }

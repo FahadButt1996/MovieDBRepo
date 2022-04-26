@@ -5,16 +5,18 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
-import com.example.restapi.models.MultiSearchMovieDataResponse
-import com.example.starzplayassignment.interfaces.GenericAdapterCallback
+import com.example.restapi.models.ResultResponse
 import com.example.starzplayassignment.databinding.MovieItemBinding
+import com.example.starzplayassignment.interfaces.GenericAdapterCallback
+import com.example.starzplayassignment.utilities.MediaTypeEnum
 import com.example.starzplayassignment.utilities.appendImageBaseURL
 import com.example.starzplayassignment.utilities.loadImage
+import com.example.starzplayassignment.utilities.nonNullValue
 
 class MoviesItemAdapter(
     val context: Context,
-    val list: ArrayList<MultiSearchMovieDataResponse.Result>,
-    val genericAdapterCallback: GenericAdapterCallback
+    val list: ArrayList<ResultResponse>,
+    private val genericAdapterCallback: GenericAdapterCallback
 ) :
     Adapter<MoviesItemAdapter.ViewHolder>() {
 
@@ -30,11 +32,20 @@ class MoviesItemAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        loadImage(
-            context,
-            list[position].posterPath.appendImageBaseURL(),
-            holder.binding.movieImage
-        )
+        if (list[position].mediaType == MediaTypeEnum.PERSON.type) {
+            loadImage(
+                context,
+                list[position].profilePath.nonNullValue().appendImageBaseURL(),
+                holder.binding.movieImage
+            )
+
+        } else {
+            loadImage(
+                context,
+                list[position].posterPath.appendImageBaseURL(),
+                holder.binding.movieImage
+            )
+        }
         holder.binding.movieImageContainer.setOnClickListener {
             genericAdapterCallback.getClickedObject(list[position], position = position)
         }

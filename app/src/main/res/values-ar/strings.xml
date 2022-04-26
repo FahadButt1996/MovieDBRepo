@@ -2,6 +2,7 @@
     <string name="app_name">StarzPlayAssignment</string>
     <string name="plase_wait">ارجوك انتظر</string>
     <string name="title">عنوان :</string>
+    <string name="name">اسم :</string>
     <string name="overview">ملخص :</string>
     <string name="no_title_available">لا يوجد عنوان متاح</string>
     <string name="no_overview_available">لا توجد نظرة عامة متاحة</string>
@@ -12,4 +13,6 @@
     <string name="load_more">تحميل المزيد</string>
     <string name="multi_search_movie">أفلام متعددة البحث</string>
     <string name="movie_detail">تفاصيل الفيلم</string>
+    <string name="search">بحث</string>
+
 </resources>

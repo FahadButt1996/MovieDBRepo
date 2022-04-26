@@ -29,13 +29,19 @@ class MovieDetailScreen : AppCompatActivity(), View.OnClickListener {
             binding.movieImage
         )
 
-        binding.movieTitle.text = if (!intent.getStringExtra("title").isNullOrEmpty()) {
+        if (intent.getStringExtra(MEDIA_TYPE).nonNullValue() == MediaTypeEnum.PERSON.type) {
+            binding.titleLabel.text = getString(R.string.name)
+        } else {
+            binding.titleLabel.text = getString(R.string.title)
+        }
+
+        binding.movieTitle.text = if (!intent.getStringExtra(TITLE).isNullOrEmpty()) {
             intent.getStringExtra(TITLE)
         } else {
             getString(R.string.no_title_available)
 
         }
-        binding.movieOverview.text = if (!intent.getStringExtra("overview").isNullOrEmpty()) {
+        binding.movieOverview.text = if (!intent.getStringExtra(OVERVIEW).isNullOrEmpty()) {
             intent.getStringExtra(OVERVIEW)
         } else {
             getString(R.string.no_overview_available)

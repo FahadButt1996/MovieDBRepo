@@ -1,6 +1,6 @@
 package com.example.starzplayassignment.repository
 
-import com.example.restapi.SUCCESS
+import com.example.restapi.utilities.SUCCESS
 import com.example.restapi.interfaces.ApiInterface
 import com.example.restapi.models.MultiSearchMovieDataResponse
 import kotlinx.coroutines.Dispatchers

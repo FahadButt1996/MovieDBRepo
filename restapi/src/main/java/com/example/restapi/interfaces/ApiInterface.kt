@@ -1,6 +1,6 @@
 package com.example.restapi.interfaces
 
-import com.example.restapi.BASE_URLS
+import com.example.restapi.utilities.BASE_URLS
 import com.example.restapi.models.MultiSearchMovieDataResponse
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import kotlinx.coroutines.Deferred

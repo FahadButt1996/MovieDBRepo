@@ -37,7 +37,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintHorizontal_weight="0.7"
-            app:layout_constraintStart_toEndOf="@+id/textView5"
+            app:layout_constraintStart_toEndOf="@+id/titleLabel"
             app:layout_constraintTop_toBottomOf="@+id/movieTitle" />
 
         <TextView
@@ -67,7 +67,7 @@
             app:layout_constraintTop_toBottomOf="@+id/customToolbar" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/titleLabel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingHorizontal="10dp"
@@ -91,7 +91,7 @@
             android:textSize="13sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_weight="0.7"
-            app:layout_constraintStart_toEndOf="@+id/textView5"
+            app:layout_constraintStart_toEndOf="@+id/titleLabel"
             app:layout_constraintTop_toBottomOf="@+id/movieImage" />
 
         <ImageView

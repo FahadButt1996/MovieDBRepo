@@ -3,6 +3,7 @@ package com.example.starzplayassignment.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.restapi.models.MultiSearchMovieDataResponse
+import com.example.restapi.models.ResultResponse
 import com.example.starzplayassignment.repository.MovieDBRepository
 
 class MovieDBViewModel(private val repository: MovieDBRepository) : ViewModel() {
@@ -13,7 +14,7 @@ class MovieDBViewModel(private val repository: MovieDBRepository) : ViewModel() 
 
     fun convertListToHashMap(
         movieData: MultiSearchMovieDataResponse,
-        hashMap: HashMap<String, ArrayList<MultiSearchMovieDataResponse.Result>>
+        hashMap: HashMap<String, ArrayList<ResultResponse>>
     ) {
         movieData.results.forEach {
             val data = hashMap[it.mediaType]
@@ -27,7 +28,7 @@ class MovieDBViewModel(private val repository: MovieDBRepository) : ViewModel() 
         sortDataAlphabetically(hashMap)
     }
 
-    private fun sortDataAlphabetically(hashMap: HashMap<String, ArrayList<MultiSearchMovieDataResponse.Result>>) {
+    private fun sortDataAlphabetically(hashMap: HashMap<String, ArrayList<ResultResponse>>) {
         hashMap.keys.forEach {
             hashMap[it]?.sortBy { s -> s.title }
         }

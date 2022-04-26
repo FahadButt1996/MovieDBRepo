@@ -5,16 +5,16 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
-import com.example.restapi.models.MultiSearchMovieDataResponse
-import com.example.starzplayassignment.interfaces.GenericAdapterCallback
+import com.example.restapi.models.ResultResponse
 import com.example.starzplayassignment.databinding.CarousalViewChildBinding
+import com.example.starzplayassignment.interfaces.GenericAdapterCallback
 import com.example.starzplayassignment.utilities.nonNullValue
 import java.util.*
 
 class MultiSearchMovieAdapter(
     private val context: Context,
     private val entries: List<String>,
-    private val hashMap: HashMap<String, ArrayList<MultiSearchMovieDataResponse.Result>>,
+    private val hashMap: HashMap<String, ArrayList<ResultResponse>>,
     private val genericAdapterCallback: GenericAdapterCallback
 ) :
     Adapter<MultiSearchMovieAdapter.ViewHolder>() {

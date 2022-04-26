@@ -2,6 +2,7 @@
     <string name="app_name">StarzPlayAssignment</string>
     <string name="plase_wait">Please Wait</string>
     <string name="title">Title :</string>
+    <string name="name">Name :</string>
     <string name="overview">Overview :</string>
     <string name="no_title_available">No title available</string>
     <string name="no_overview_available">No overview available</string>
@@ -12,4 +13,5 @@
     <string name="load_more">Load More</string>
     <string name="multi_search_movie">Multi Search Movies</string>
     <string name="movie_detail">Movie Details</string>
+    <string name="search">Search</string>
 </resources>
