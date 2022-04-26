@@ -33,6 +33,7 @@ class MoviesActivity : AppCompatActivity(), CoroutineScope, GenericAdapterCallba
     lateinit var hashMap: HashMap<String, ArrayList<ResultResponse>>
     var pageNo: Int = 1
     var totalPages: Int? = null
+    lateinit var languageConfigs: LanguageConfigs
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +58,7 @@ class MoviesActivity : AppCompatActivity(), CoroutineScope, GenericAdapterCallba
             this,
             MovieDBViewModel.UserViewModelFactory(MovieDBRepository())
         ).get(MovieDBViewModel::class.java)
-        LanguageConfigs(this)
+        languageConfigs = LanguageConfigs(this)
     }
 
     private fun setListeners() {
@@ -161,13 +162,20 @@ class MoviesActivity : AppCompatActivity(), CoroutineScope, GenericAdapterCallba
             val adapter =
                 MultiSearchMovieAdapter(
                     this@MoviesActivity,
-                    getMovieDataHashMap().keys.toList().sorted(),
+                    ArrayList(getMovieDataHashMap().keys.toList().sorted()),
                     getMovieDataHashMap(),
                     this@MoviesActivity
                 )
             binding.multiSearchRecyclerView.adapter = adapter
             adapter.notifyDataSetChanged()
         } else {
+            if ((binding.multiSearchRecyclerView.adapter as MultiSearchMovieAdapter).getEntries()
+                    .isEmpty()
+            ) {
+                (binding.multiSearchRecyclerView.adapter as MultiSearchMovieAdapter).updateEntries(
+                    getMovieDataHashMap().keys.toList().sorted()
+                )
+            }
             binding.multiSearchRecyclerView.adapter?.notifyDataSetChanged()
         }
     }
@@ -219,14 +227,15 @@ class MoviesActivity : AppCompatActivity(), CoroutineScope, GenericAdapterCallba
                 }
             }
             binding.customToolbar.language?.id -> {
-                val languageConfigs = LanguageConfigs(this)
                 if (languageConfigs.language == LanguageEnum.ARABIC) {
                     languageConfigs.language = LanguageEnum.ENGLISH
+                    LanguageConfigs.initializeLocale(this, LanguageEnum.ENGLISH.languageCode)
+
                 } else {
                     languageConfigs.language = LanguageEnum.ARABIC
+                    LanguageConfigs.initializeLocale(this, LanguageEnum.ARABIC.languageCode)
 
                 }
-                LanguageConfigs.initializeLocale(this)
                 restartActivity()
             }
         }

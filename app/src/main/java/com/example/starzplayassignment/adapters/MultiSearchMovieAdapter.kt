@@ -13,7 +13,7 @@ import java.util.*
 
 class MultiSearchMovieAdapter(
     private val context: Context,
-    private val entries: List<String>,
+    private val entries: ArrayList<String>,
     private val hashMap: HashMap<String, ArrayList<ResultResponse>>,
     private val genericAdapterCallback: GenericAdapterCallback
 ) :
@@ -43,6 +43,15 @@ class MultiSearchMovieAdapter(
             holder.binding.moviesRecyclerview.adapter = adapter
             adapter.notifyDataSetChanged()
         }
+    }
+
+    fun getEntries(): List<String> {
+        return entries
+    }
+
+    fun updateEntries(_entries: List<String>) {
+        entries.clear()
+        entries.addAll(_entries)
     }
 
     inner class ViewHolder(val binding: CarousalViewChildBinding) :

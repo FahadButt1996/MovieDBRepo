@@ -12,11 +12,6 @@ import kotlinx.coroutines.flow.first
 import java.util.*
 
 class LanguageConfigs(val context: Context) {
-
-    init {
-        selectedLanguageEnum = language
-    }
-
     private suspend fun save(key: String, value: String) {
         val dataStoreKey = stringPreferencesKey(key)
         context.dataStore.edit {
@@ -40,14 +35,17 @@ class LanguageConfigs(val context: Context) {
         get() {
             val code = readKey(SELECTED_LANGUAGE_CODE)
 
-            return if (!code.isNullOrEmpty() && code.equals(LanguageEnum.ARABIC.languageCode, true)) {
+            return if (!code.isNullOrEmpty() && code.equals(
+                    LanguageEnum.ARABIC.languageCode,
+                    true
+                )
+            ) {
                 LanguageEnum.ARABIC
             } else {
                 LanguageEnum.ENGLISH
             }
         }
         set(value) {
-            selectedLanguageEnum = value
             GlobalScope.launch {
                 save(SELECTED_LANGUAGE_CODE, value.languageCode)
             }
@@ -61,11 +59,10 @@ class LanguageConfigs(val context: Context) {
         )
 
         private const val SELECTED_LANGUAGE_CODE = "selectedLanguageCode"
-        var selectedLanguageEnum: LanguageEnum = LanguageEnum.ENGLISH
 
-        fun initializeLocale(context: Context) {
+        fun initializeLocale(context: Context, languageCode: String) {
             val locale =
-                Locale(selectedLanguageEnum.languageCode)
+                Locale(languageCode)
             Locale.setDefault(locale)
             val config = Configuration(context.resources.configuration)
             config.setLocale(locale)
